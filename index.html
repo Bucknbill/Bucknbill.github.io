@@ -5,11 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Bucknbill Games</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+    @font-face {
+      font-family: 'Minecraftia';
+      src: url('fonts/Minecraftia.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
 
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Minecraftia', monospace, sans-serif;
       background: linear-gradient(135deg, #1f1c2c, #928dab);
       color: #e0e0e0;
       display: flex;
@@ -35,70 +40,6 @@
       color: #d0f0f7cc;
       letter-spacing: 0.05em;
       text-shadow: 0 0 6px #000000aa;
-    }
-
-    .game-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 25px;
-      width: 100%;
-      max-width: 900px;
-    }
-
-    .game {
-      background: linear-gradient(145deg, #2b2a40, #212134);
-      border-radius: 15px;
-      box-shadow:
-        4px 4px 10px #16161f,
-        -4px -4px 10px #3c3a57;
-      padding: 25px 20px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .game::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at center, #00ffd5, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .game:hover::before {
-      opacity: 0.3;
-    }
-
-    .game:hover {
-      box-shadow:
-        0 0 15px #00ffd5,
-        0 0 30px #00ffd5;
-      transform: scale(1.07);
-      background: linear-gradient(145deg, #00ffd5, #008b84);
-    }
-
-    .game a {
-      position: relative;
-      z-index: 1;
-      text-decoration: none;
-      color: #00ffd5;
-      font-weight: 700;
-      font-size: 1.3rem;
-      letter-spacing: 0.03em;
-      user-select: none;
-    }
-
-    .game a:focus,
-    .game a:active {
-      outline: none;
-      text-shadow: 0 0 6px #00fff6;
     }
 
     /* Copyright Button */
@@ -135,12 +76,6 @@
       h1 {
         font-size: 2.8rem;
       }
-      .game {
-        padding: 18px 15px;
-      }
-      .game a {
-        font-size: 1.1rem;
-      }
       .credits-button {
         width: 50px;
         height: 50px;
@@ -152,12 +87,6 @@
 <body>
   <h1>Bucknbill Games</h1>
   <p>Welcome! Click a game to play:</p>
-  <div class="game-list">
-    <div class="game"><a href="games/1v1lol.html">1v1.lol</a></div>
-    <div class="game"><a href="games/retrobowl.html">Retro Bowl</a></div>
-    <div class="game"><a href="games/slope.html">Slope</a></div>
-    <div class="game"><a href="games/motox3m.html">Moto X3M</a></div>
-  </div>
 
   <!-- Copyright Button -->
   <a href="https://guns.lol/bucknbill" target="_blank" rel="noopener noreferrer" class="credits-button" aria-label="Credits">
