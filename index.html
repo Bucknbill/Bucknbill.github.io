@@ -38,6 +38,9 @@
       border-radius: 12px;
       cursor: pointer;
       transition: background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .folder-toggle:hover {
@@ -149,8 +152,8 @@
 
   <h1>Bucknbill</h1>
 
-  <!-- Folder Toggle Button -->
-  <button class="folder-toggle" onclick="toggleGames()">Open Game Folder</button>
+  <!-- Folder Toggle Button with folder emoji -->
+  <button class="folder-toggle" onclick="toggleGames()">📁 Open Game Folder</button>
 
   <!-- Game List -->
   <div id="gameList" class="game-list" aria-hidden="true">
