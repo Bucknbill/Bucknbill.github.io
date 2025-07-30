@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bucknbill Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bucknbill</title>
   <style>
     @font-face {
       font-family: 'Minecraftia';
@@ -13,219 +13,142 @@
     }
 
     body {
-      margin: 0;
       font-family: 'Minecraftia', monospace, sans-serif;
-      background: linear-gradient(135deg, #1f1c2c, #928dab);
-      color: #e0e0e0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      align-items: center;
-      padding: 40px 20px 80px;
+      background: linear-gradient(135deg, #101010, #1a1a1a);
+      color: white;
       text-align: center;
+      padding: 60px 20px;
+      margin: 0;
       overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Tabs Navigation */
-    .tabs {
-      display: flex;
-      gap: 20px;
-      background: #222;
-      padding: 12px 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 12px #00ffd5cc;
-      max-width: 600px;
-      margin: 0 auto 40px;
-      user-select: none;
-      justify-content: center;
-      width: 100%;
-      max-width: 800px;
-    }
-
-    .tab {
-      font-family: 'Minecraftia', monospace, sans-serif;
-      color: #00ffd5;
-      background: none;
-      border: none;
-      font-weight: bold;
-      font-size: 1.3rem;
-      padding: 6px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-
-    .tab:hover {
-      background: #00ffd5;
-      color: #111;
-    }
-
-    .tab.active,
-    .tab[aria-current="page"] {
-      background: #00ffd5;
-      color: #111;
-      box-shadow: 0 0 10px #00ffd5cc;
-      cursor: default;
-      pointer-events: none;
     }
 
     h1 {
-      font-size: 4rem;
-      margin-bottom: 0.3em;
+      font-size: 2.5rem;
       color: #00ffd5;
-      text-shadow: 0 0 10px #00ffd5, 0 0 20px #00ffd5;
-    }
-
-    p {
-      font-size: 1.3rem;
+      text-shadow: 2px 2px 4px #000;
       margin-bottom: 40px;
-      color: #d0f0f7cc;
-      letter-spacing: 0.05em;
-      text-shadow: 0 0 6px #000000aa;
     }
 
-    /* Folder Button */
-    .folder {
-      cursor: pointer;
+    .folder-toggle {
       background: #222;
-      padding: 20px 30px;
-      border-radius: 10px;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 0 8px #00ffd5cc;
-      transition: background 0.3s ease;
-      user-select: none;
-      font-size: 1.6rem;
-      font-weight: bold;
+      border: 2px solid #00ffd5;
+      padding: 10px 30px;
       color: #00ffd5;
-      width: 200px;
-      justify-content: center;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    .folder:hover {
-      background: #00ffd5;
-      color: #111;
-      box-shadow: 0 0 16px #00ffd5ff;
-    }
-
-    /* Folder icon */
-    .folder-icon {
-      width: 28px;
-      height: 28px;
-      fill: currentColor;
-      transition: transform 0.3s ease;
-    }
-
-    .folder.open .folder-icon {
-      transform: rotate(90deg);
-    }
-
-    /* Game List */
-    .game-list {
-      max-width: 320px;
-      background: #111a22dd;
+      font-size: 1.1rem;
       border-radius: 12px;
-      overflow: hidden;
-      transition: max-height 0.5s ease, padding 0.5s ease;
-      max-height: 0;
-      padding: 0 20px;
-      margin-bottom: 40px;
+      cursor: pointer;
+      transition: background 0.2s;
     }
 
-    .game-list.open {
-      max-height: 500px; /* enough for the list */
-      padding: 20px;
-    }
-
-    .game {
-      background: #222;
-      margin: 10px 0;
-      padding: 12px 18px;
-      border-radius: 8px;
-      transition: background 0.3s ease;
-    }
-
-    .game:hover {
+    .folder-toggle:hover {
       background: #00ffd5;
-      color: #111;
+      color: #000;
+    }
+
+    .game-list {
+      margin-top: 30px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      animation: fadeIn 0.4s ease-in-out forwards;
+    }
+
+    .game-list.show {
+      display: flex;
     }
 
     .game a {
       text-decoration: none;
-      color: inherit;
-      font-weight: 700;
-      font-size: 1.2rem;
+      color: #ffffff;
+      background: #2d2d2d;
+      border: 2px solid #00ffd5;
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: all 0.2s;
     }
 
-    /* Copyright Button */
-    .credits-button {
+    .game a:hover {
+      background: #00ffd5;
+      color: #000;
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .credits-btn {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 60px;
-      height: 60px;
+      bottom: 15px;
+      right: 15px;
+      background: #00ffd5;
+      color: black;
+      font-size: 1.2rem;
       border-radius: 50%;
-      background: linear-gradient(135deg, #ff4e50, #f9d423);
-      box-shadow: 0 5px 15px rgba(249, 212, 35, 0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-weight: 900;
-      color: #fff;
-      font-size: 2.2rem;
-      user-select: none;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      z-index: 9999;
+      width: 50px;
+      height: 50px;
+      line-height: 50px;
       text-align: center;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 10px #00ffd5;
+      transition: all 0.3s ease;
+    }
+
+    .credits-btn:hover {
+      transform: scale(1.1);
+      background: #00e0c0;
+    }
+
+    .top-nav {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px 30px;
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+      z-index: 999;
+    }
+
+    .tab {
+      font-family: 'Minecraftia', monospace;
+      color: #00ffd5;
+      font-size: 1.2rem;
       text-decoration: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background 0.2s, transform 0.2s;
     }
 
-    .credits-button:hover {
-      transform: scale(1.15);
-      box-shadow: 0 8px 25px rgba(249, 212, 35, 0.9);
+    .tab:hover {
+      background: rgba(0, 255, 213, 0.2);
+      transform: scale(1.05);
     }
 
-    /* Responsive tweaks */
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 2.8rem;
-      }
-      .credits-button {
-        width: 50px;
-        height: 50px;
-        font-size: 1.8rem;
-      }
-      .folder {
-        width: 140px;
-        font-size: 1.2rem;
-        padding: 14px 20px;
-      }
+    .tab.active {
+      background: rgba(0, 255, 213, 0.4);
     }
   </style>
 </head>
 <body>
 
-  <!-- Tabs Navigation -->
-  <nav class="tabs">
-    <button class="tab active" aria-current="page">Main Page</button>
-    <button class="tab" id="mochaTab">Mocha</button>
+  <!-- Top Navigation Tabs -->
+  <nav class="top-nav">
+    <a href="index.html" class="tab active">Main Page</a>
+    <a href="browser.html" class="tab">Browser</a>
   </nav>
 
-  <h1>Bucknbill Games</h1>
-  <p>Welcome! Click the folder below to open the game list:</p>
+  <h1>Bucknbill</h1>
 
-  <div id="folder" class="folder" aria-expanded="false" role="button" tabindex="0" aria-label="Open games folder">
-    <svg class="folder-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
-    </svg>
-    GAMES
-  </div>
+  <!-- Folder Toggle Button -->
+  <button class="folder-toggle" onclick="toggleGames()">Open Game Folder</button>
 
+  <!-- Game List -->
   <div id="gameList" class="game-list" aria-hidden="true">
     <div class="game"><a href="games/undertale/index.html">Undertale</a></div>
     <div class="game"><a href="games/undertaleyellow/index.html">Undertale Yellow</a></div>
@@ -236,35 +159,15 @@
     <div class="game"><a href="games/paperio/index.html">Paper IO</a></div>
   </div>
 
-  <!-- Copyright Button -->
-  <a href="https://guns.lol/bucknbill" target="_blank" rel="noopener noreferrer" class="credits-button" aria-label="Credits">
-    ©
-  </a>
+  <!-- Credits Button -->
+  <a href="https://guns.lol/bucknbill" class="credits-btn" title="Credits">©</a>
 
   <script>
-    // Folder toggle
-    const folder = document.getElementById('folder');
-    const gameList = document.getElementById('gameList');
-
-    function toggleFolder() {
-      const isOpen = folder.classList.toggle('open');
-      gameList.classList.toggle('open', isOpen);
-      folder.setAttribute('aria-expanded', isOpen);
-      gameList.setAttribute('aria-hidden', !isOpen);
+    function toggleGames() {
+      const list = document.getElementById("gameList");
+      list.classList.toggle("show");
     }
-
-    folder.addEventListener('click', toggleFolder);
-    folder.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        toggleFolder();
-      }
-    });
-
-    // Tabs redirect
-    document.getElementById('mochaTab').addEventListener('click', () => {
-      window.location.href = 'https://bucknbill.github.io/Mocha/index.html';
-    });
   </script>
+
 </body>
 </html>
