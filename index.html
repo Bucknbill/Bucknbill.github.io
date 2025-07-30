@@ -42,12 +42,12 @@
     }
 
     .folder-toggle {
-      margin: 20px auto;
+      margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: #222;
+      background: rgba(34, 34, 34, 0.7);
       border: 2px solid #00ffd5;
       padding: 12px 24px;
       font-size: 1.1rem;
@@ -55,10 +55,17 @@
       border-radius: 12px;
       cursor: pointer;
       transition: background 0.2s;
+      position: relative;
+      top: 10px;
     }
 
     .folder-toggle:hover {
       background: rgba(0, 255, 213, 0.3);
+    }
+
+    .folder-toggle img {
+      width: 28px;
+      height: 28px;
     }
 
     #game-folder {
@@ -71,22 +78,37 @@
       display: block;
     }
 
+    #game-folder ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    #game-folder li {
+      margin: 10px 0;
+    }
+
+    #game-folder a {
+      color: #00ffd5;
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+
     .credit-button {
       position: fixed;
       bottom: 15px;
       right: 15px;
-      width: 40px;
-      height: 40px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.1);
       color: white;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       display: flex;
       align-items: center;
       justify-content: center;
       border: 2px solid white;
       cursor: pointer;
-      transition: 0.3s;
+      transition: background 0.3s;
     }
 
     .credit-button:hover {
@@ -138,7 +160,7 @@
   </div>
 
   <button class="folder-toggle" onclick="toggleGames()">
-    <img src="folder-icon.png" alt="folder" width="24" height="24" /> Games
+    <img src="custom-folder-icon.png" alt="folder" /> Games
   </button>
 
   <div id="game-folder">
