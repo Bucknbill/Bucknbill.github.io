@@ -1,190 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bucknbill</title>
+  <meta charset="UTF-8">
+  <title>Bucknbill Games</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
   <style>
-    @font-face {
-      font-family: 'Minecraftia';
-      src: url('fonts/Minecraftia-Regular.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    body {
-      font-family: 'Minecraftia', monospace, sans-serif;
+    html, body {
       margin: 0;
-      padding: 60px 20px;
-      color: white;
-      text-align: center;
+      padding: 0;
+      font-family: 'Press Start 2P', cursive;
       background: url('https://images.stockcake.com/public/c/9/a/c9a42323-4ef9-42f1-9102-3ff270af18cd_large/pixel-space-dreams-stockcake.jpg') no-repeat center center fixed;
       background-size: cover;
-      overflow-x: hidden;
+      height: 100%;
     }
 
-    h1 {
-      font-size: 2.5rem;
+    body.locked {
+      overflow: hidden;
+    }
+
+    #login-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 5, 20, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      backdrop-filter: blur(10px);
+    }
+
+    #login-screen h1 {
       color: #00ffd5;
-      text-shadow: 2px 2px 6px #000;
-      margin-bottom: 40px;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #password-input {
+      padding: 10px 15px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      width: 250px;
+    }
+
+    #login-button {
+      padding: 10px 25px;
+      font-size: 1rem;
+      background-color: #00ffd5;
+      color: black;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 10px #00ffd5;
+      transition: 0.2s;
+    }
+
+    #login-button:hover {
+      transform: scale(1.05);
+      background-color: #00e1be;
+    }
+
+    #main-content {
+      display: none;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 15px;
+      display: flex;
+      justify-content: space-around;
+      color: white;
+      font-size: 0.7rem;
+      text-transform: uppercase;
     }
 
     .folder-toggle {
-      font-family: 'Minecraftia', monospace, sans-serif;
-      background: #222;
+      background: rgba(0, 255, 213, 0.2);
+      color: white;
       border: 2px solid #00ffd5;
-      padding: 10px 30px;
-      color: #00ffd5;
-      font-size: 1.1rem;
+      padding: 10px;
       border-radius: 12px;
+      font-size: 0.6rem;
       cursor: pointer;
-      transition: background 0.2s;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      vertical-align: middle;
+      transition: 0.2s;
     }
 
     .folder-toggle:hover {
-      background: rgba(0, 255, 213, 0.3); /* translucent teal */
-      color: #00ffd5;
-    }
-
-    .game-list {
-      margin-top: 30px;
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-      animation: fadeIn 0.4s ease-in-out forwards;
-    }
-
-    .game-list.show {
-      display: flex;
-    }
-
-    .game a {
-      text-decoration: none;
-      color: #ffffff;
-      background: rgba(45, 45, 45, 0.85);
-      border: 2px solid #00ffd5;
-      padding: 10px 20px;
-      border-radius: 10px;
-      transition: all 0.2s;
-      backdrop-filter: blur(4px);
-    }
-
-    .game a:hover {
-      background: #00ffd5;
-      color: #000;
-      transform: scale(1.05);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Credits button */
-    .credits-btn {
-      position: fixed;
-      bottom: 15px;
-      right: 15px;
-      background: rgba(0, 255, 213, 0.3);
-      color: black;
-      font-size: 1.8rem;
-      border-radius: 50%;
-      width: 65px;
-      height: 65px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 12px rgba(0, 255, 213, 0.5);
-      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-      text-decoration: none;
-      user-select: none;
-      z-index: 1000;
-    }
-
-    .credits-btn:hover {
-      background: rgba(0, 255, 213, 1);
-      box-shadow: 0 0 20px rgba(0, 255, 213, 1);
-      transform: scale(1.1);
-    }
-
-    .top-nav {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 20px;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 10px 30px;
-      border-radius: 12px;
-      backdrop-filter: blur(5px);
-      z-index: 999;
-    }
-
-    .tab {
-      font-family: 'Minecraftia', monospace;
-      color: #00ffd5;
-      font-size: 1.2rem;
-      text-decoration: none;
-      padding: 6px 12px;
-      border-radius: 6px;
-      transition: background 0.2s, transform 0.2s;
-    }
-
-    .tab:hover {
-      background: rgba(0, 255, 213, 0.2);
-      transform: scale(1.05);
-    }
-
-    .tab.active {
       background: rgba(0, 255, 213, 0.4);
+    }
+
+    #credits-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1rem;
+      color: white;
+      transition: 0.2s;
+      border: 1px solid white;
+    }
+
+    #credits-button:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+      color: black;
+    }
+
+    #game-folder {
+      margin: 20px;
+      padding: 10px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      display: none;
+      border: 2px solid #00ffd5;
+      border-radius: 8px;
+      max-width: 300px;
     }
   </style>
 </head>
-<body>
+<body class="locked">
 
-  <!-- Top Navigation Tabs -->
-  <nav class="top-nav">
-    <a href="index.html" class="tab active">Main Page</a>
-    <a href="browser.html" class="tab">Browser</a>
-  </nav>
-
-  <h1>Bucknbill</h1>
-
-  <!-- Folder Toggle Button with custom SVG folder icon -->
-  <button class="folder-toggle" onclick="toggleGames()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none" stroke="#00ffd5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
-      <path d="M2 7h5l2 3h13v8H2z"></path>
-      <path d="M2 7V4a2 2 0 0 1 2-2h5l3 3h8a2 2 0 0 1 2 2v2"></path>
-    </svg>
-    Games
-  </button>
-
-  <!-- Game List -->
-  <div id="gameList" class="game-list" aria-hidden="true">
-    <div class="game"><a href="games/undertale/index.html">Undertale</a></div>
-    <div class="game"><a href="games/undertaleyellow/index.html">Undertale Yellow</a></div>
-    <div class="game"><a href="games/deltarune/index.html">Deltarune</a></div>
-    <div class="game"><a href="games/retrobowl/index.html">Retro Bowl</a></div>
-    <div class="game"><a href="games/cookieclicker/index.html">Cookie Clicker</a></div>
-    <div class="game"><a href="games/minesweeper/index.html">Minesweeper</a></div>
-    <div class="game"><a href="games/paperio/index.html">Paper IO</a></div>
+  <div id="login-screen">
+    <h1>Enter Password to Continue</h1>
+    <input type="password" id="password-input" placeholder="••••••••">
+    <button id="login-button">Login</button>
   </div>
 
-  <!-- Credits Button -->
-  <a href="https://guns.lol/bucknbill" class="credits-btn" title="Credits" target="_blank" rel="noopener noreferrer">©</a>
+  <div id="main-content">
+    <header>
+      <div>Main Page</div>
+      <div>Browser</div>
+    </header>
+
+    <button class="folder-toggle" onclick="toggleGames()">📁 Games</button>
+    <div id="game-folder">
+      <p>🕹️ Cookie Clicker</p>
+      <p>🕹️ Undertale Yellow</p>
+      <p>🕹️ Minesweeper</p>
+      <p>🕹️ Paper.io</p>
+    </div>
+
+    <a id="credits-button" href="#">©</a>
+  </div>
 
   <script>
+    const correctPassword = "bucknbill123";
+
+    document.getElementById("login-button").addEventListener("click", () => {
+      const input = document.getElementById("password-input").value;
+      if (input === correctPassword) {
+        document.getElementById("login-screen").style.display = "none";
+        document.getElementById("main-content").style.display = "block";
+        document.body.classList.remove("locked");
+      } else {
+        alert("Incorrect password. Try again.");
+      }
+    });
+
+    document.getElementById("password-input").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        document.getElementById("login-button").click();
+      }
+    });
+
     function toggleGames() {
-      const list = document.getElementById("gameList");
-      list.classList.toggle("show");
+      const folder = document.getElementById("game-folder");
+      folder.style.display = folder.style.display === "block" ? "none" : "block";
     }
   </script>
 
