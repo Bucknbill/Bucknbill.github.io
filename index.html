@@ -21,10 +21,53 @@
       flex-direction: column;
       min-height: 100vh;
       align-items: center;
-      padding: 60px 20px;
+      padding: 40px 20px 80px;
       text-align: center;
       overflow-x: hidden;
       position: relative;
+    }
+
+    /* Tabs Navigation */
+    .tabs {
+      display: flex;
+      gap: 20px;
+      background: #222;
+      padding: 12px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px #00ffd5cc;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      user-select: none;
+      justify-content: center;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .tab {
+      font-family: 'Minecraftia', monospace, sans-serif;
+      color: #00ffd5;
+      background: none;
+      border: none;
+      font-weight: bold;
+      font-size: 1.3rem;
+      padding: 6px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .tab:hover {
+      background: #00ffd5;
+      color: #111;
+    }
+
+    .tab.active,
+    .tab[aria-current="page"] {
+      background: #00ffd5;
+      color: #111;
+      box-shadow: 0 0 10px #00ffd5cc;
+      cursor: default;
+      pointer-events: none;
     }
 
     h1 {
@@ -94,7 +137,7 @@
     }
 
     .game-list.open {
-      max-height: 500px; /* big enough for the list */
+      max-height: 500px; /* enough for the list */
       padding: 20px;
     }
 
@@ -166,6 +209,13 @@
   </style>
 </head>
 <body>
+
+  <!-- Tabs Navigation -->
+  <nav class="tabs">
+    <button class="tab active" aria-current="page">Main Page</button>
+    <button class="tab" id="mochaTab">Mocha</button>
+  </nav>
+
   <h1>Bucknbill Games</h1>
   <p>Welcome! Click the folder below to open the game list:</p>
 
@@ -178,10 +228,12 @@
 
   <div id="gameList" class="game-list" aria-hidden="true">
     <div class="game"><a href="games/undertale/index.html">Undertale</a></div>
+    <div class="game"><a href="games/undertaleyellow/index.html">Undertale Yellow</a></div>
     <div class="game"><a href="games/deltarune/index.html">Deltarune</a></div>
-    <div class="game"><a href="games/hotlinemiami/index.html">Hotline Miami</a></div>
     <div class="game"><a href="games/retrobowl/index.html">Retro Bowl</a></div>
-    <div class="game"><a href="games/pizzatower/index.html">Pizza Tower</a></div>
+    <div class="game"><a href="games/cookieclicker/index.html">Cookie Clicker</a></div>
+    <div class="game"><a href="games/minesweeper/index.html">Minesweeper</a></div>
+    <div class="game"><a href="games/paperio/index.html">Paper IO</a></div>
   </div>
 
   <!-- Copyright Button -->
@@ -190,6 +242,7 @@
   </a>
 
   <script>
+    // Folder toggle
     const folder = document.getElementById('folder');
     const gameList = document.getElementById('gameList');
 
@@ -206,6 +259,11 @@
         e.preventDefault();
         toggleFolder();
       }
+    });
+
+    // Tabs redirect
+    document.getElementById('mochaTab').addEventListener('click', () => {
+      window.location.href = 'https://bucknbill.github.io/Mocha/index.html';
     });
   </script>
 </body>
