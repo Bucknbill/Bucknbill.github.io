@@ -3,19 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Bucknbill Games</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      font-family: 'Press Start 2P', cursive;
+      font-family: 'Poppins', sans-serif;
       background: url('https://images.stockcake.com/public/c/9/a/c9a42323-4ef9-42f1-9102-3ff270af18cd_large/pixel-space-dreams-stockcake.jpg') no-repeat center center fixed;
       background-size: cover;
       height: 100%;
-    }
-
-    body.locked {
-      overflow: hidden;
     }
 
     #login-screen {
@@ -35,14 +31,13 @@
 
     #login-screen h1 {
       color: #00ffd5;
-      font-size: 1.2rem;
+      font-size: 2.5rem;
       margin-bottom: 20px;
-      text-align: center;
     }
 
     #password-input {
       padding: 10px 15px;
-      font-size: 1rem;
+      font-size: 1.2rem;
       border: none;
       border-radius: 8px;
       margin-bottom: 15px;
@@ -51,7 +46,7 @@
 
     #login-button {
       padding: 10px 25px;
-      font-size: 1rem;
+      font-size: 1.1rem;
       background-color: #00ffd5;
       color: black;
       border: none;
@@ -69,64 +64,103 @@
 
     #main-content {
       display: none;
+      text-align: center;
     }
 
-    header {
-      background: rgba(0, 0, 0, 0.5);
-      padding: 15px;
+    body.locked {
+      overflow: hidden;
+    }
+
+    .tabs {
       display: flex;
-      justify-content: space-around;
-      color: white;
-      font-size: 0.7rem;
-      text-transform: uppercase;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 20px;
     }
 
-    .folder-toggle {
-      background: rgba(0, 255, 213, 0.2);
+    .tab {
       color: white;
-      border: 2px solid #00ffd5;
-      padding: 10px;
+      font-size: 1.2rem;
+      padding: 10px 20px;
+      background-color: rgba(0, 0, 0, 0.5);
       border-radius: 12px;
-      font-size: 0.6rem;
       cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .tab:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .folder {
+      margin-top: 30px;
+    }
+
+    .folder-icon {
+      width: 80px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .folder-button {
+      background-color: rgba(0, 0, 0, 0.3);
+      border: 2px solid #fff;
+      border-radius: 12px;
+      padding: 10px 20px;
+      color: white;
+      font-size: 1.3rem;
+      font-family: 'Minecraftia', monospace;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.2s;
+    }
+
+    .folder-button:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .games-list {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .game-link {
+      padding: 10px 20px;
+      background-color: rgba(0,0,0,0.4);
+      border-radius: 10px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
       transition: 0.2s;
     }
 
-    .folder-toggle:hover {
-      background: rgba(0, 255, 213, 0.4);
+    .game-link:hover {
+      background-color: rgba(255,255,255,0.2);
     }
 
-    #credits-button {
+    .credits-button {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      width: 40px;
-      height: 40px;
-      background-color: rgba(255, 255, 255, 0.3);
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1rem;
+      background-color: rgba(255, 255, 255, 0.1);
       color: white;
-      transition: 0.2s;
-      border: 1px solid white;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 50px;
+      cursor: pointer;
+      transition: 0.3s;
+      border: 2px solid white;
     }
 
-    #credits-button:hover {
-      background-color: rgba(255, 255, 255, 0.8);
-      color: black;
-    }
-
-    #game-folder {
-      margin: 20px;
-      padding: 10px;
-      background: rgba(0, 0, 0, 0.5);
-      color: white;
-      display: none;
-      border: 2px solid #00ffd5;
-      border-radius: 8px;
-      max-width: 300px;
+    .credits-button:hover {
+      background-color: rgba(255, 255, 255, 0.5);
     }
   </style>
 </head>
@@ -139,24 +173,28 @@
   </div>
 
   <div id="main-content">
-    <header>
-      <div>Main Page</div>
-      <div>Browser</div>
-    </header>
-
-    <button class="folder-toggle" onclick="toggleGames()">📁 Games</button>
-    <div id="game-folder">
-      <p>🕹️ Cookie Clicker</p>
-      <p>🕹️ Undertale Yellow</p>
-      <p>🕹️ Minesweeper</p>
-      <p>🕹️ Paper.io</p>
+    <div class="tabs">
+      <div class="tab">Main Page</div>
+      <div class="tab">Browser</div>
     </div>
 
-    <a id="credits-button" href="#">©</a>
+    <div class="folder">
+      <img src="https://cdn-icons-png.flaticon.com/512/716/716784.png" class="folder-icon" alt="Folder Icon">
+      <button class="folder-button">Games</button>
+    </div>
+
+    <div class="games-list">
+      <a class="game-link" href="games/undertale-yellow.html">Undertale Yellow</a>
+      <a class="game-link" href="games/cookie-clicker.html">Cookie Clicker</a>
+      <a class="game-link" href="games/minesweeper.html">Minesweeper</a>
+      <a class="game-link" href="games/paper-io.html">Paper IO</a>
+    </div>
   </div>
 
+  <div class="credits-button">©</div>
+
   <script>
-    const correctPassword = "bucknbill123";
+    const correctPassword = "welcometotheunderground";
 
     document.getElementById("login-button").addEventListener("click", () => {
       const input = document.getElementById("password-input").value;
@@ -174,11 +212,6 @@
         document.getElementById("login-button").click();
       }
     });
-
-    function toggleGames() {
-      const folder = document.getElementById("game-folder");
-      folder.style.display = folder.style.display === "block" ? "none" : "block";
-    }
   </script>
 
 </body>
