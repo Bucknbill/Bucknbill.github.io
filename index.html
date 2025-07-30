@@ -21,28 +21,8 @@
       text-align: center;
     }
 
-    .tabs {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      padding: 20px;
-      background: rgba(0, 0, 0, 0.5);
-      font-size: 1.3rem;
-    }
-
-    .tabs a {
-      text-decoration: none;
-      color: #00ffd5;
-      border-bottom: 2px solid transparent;
-      transition: 0.2s;
-    }
-
-    .tabs a:hover {
-      border-color: #00ffd5;
-    }
-
     .folder-toggle {
-      margin: 0 auto;
+      margin: 50px auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -56,7 +36,6 @@
       cursor: pointer;
       transition: background 0.2s;
       position: relative;
-      top: 10px;
     }
 
     .folder-toggle:hover {
@@ -152,11 +131,6 @@
   <div id="password-container">
     <input type="password" id="password" placeholder="Enter password...">
     <button onclick="checkPassword()">Enter</button>
-  </div>
-
-  <div class="tabs">
-    <a href="#">Main Page</a>
-    <a href="#">Browser</a>
   </div>
 
   <button class="folder-toggle" onclick="toggleGames()">
