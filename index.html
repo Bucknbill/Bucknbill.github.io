@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bucknbills Games</title>
+  <title>Bucknbill Games</title>
   <style>
     @font-face {
       font-family: 'Minecraftia';
@@ -40,6 +40,82 @@
       color: #d0f0f7cc;
       letter-spacing: 0.05em;
       text-shadow: 0 0 6px #000000aa;
+    }
+
+    /* Folder Button */
+    .folder {
+      cursor: pointer;
+      background: #222;
+      padding: 20px 30px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 0 8px #00ffd5cc;
+      transition: background 0.3s ease;
+      user-select: none;
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: #00ffd5;
+      width: 200px;
+      justify-content: center;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .folder:hover {
+      background: #00ffd5;
+      color: #111;
+      box-shadow: 0 0 16px #00ffd5ff;
+    }
+
+    /* Folder icon */
+    .folder-icon {
+      width: 28px;
+      height: 28px;
+      fill: currentColor;
+      transition: transform 0.3s ease;
+    }
+
+    .folder.open .folder-icon {
+      transform: rotate(90deg);
+    }
+
+    /* Game List */
+    .game-list {
+      max-width: 320px;
+      background: #111a22dd;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: max-height 0.5s ease, padding 0.5s ease;
+      max-height: 0;
+      padding: 0 20px;
+      margin-bottom: 40px;
+    }
+
+    .game-list.open {
+      max-height: 500px; /* big enough for the list */
+      padding: 20px;
+    }
+
+    .game {
+      background: #222;
+      margin: 10px 0;
+      padding: 12px 18px;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+
+    .game:hover {
+      background: #00ffd5;
+      color: #111;
+    }
+
+    .game a {
+      text-decoration: none;
+      color: inherit;
+      font-weight: 700;
+      font-size: 1.2rem;
     }
 
     /* Copyright Button */
@@ -81,16 +157,56 @@
         height: 50px;
         font-size: 1.8rem;
       }
+      .folder {
+        width: 140px;
+        font-size: 1.2rem;
+        padding: 14px 20px;
+      }
     }
   </style>
 </head>
 <body>
   <h1>Bucknbill Games</h1>
-  <p>Welcome! Click a game to play:</p>
+  <p>Welcome! Click the folder below to open the game list:</p>
+
+  <div id="folder" class="folder" aria-expanded="false" role="button" tabindex="0" aria-label="Open games folder">
+    <svg class="folder-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M10 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+    </svg>
+    GAMES
+  </div>
+
+  <div id="gameList" class="game-list" aria-hidden="true">
+    <div class="game"><a href="games/undertale/index.html">Undertale</a></div>
+    <div class="game"><a href="games/deltarune/index.html">Deltarune</a></div>
+    <div class="game"><a href="games/hotlinemiami/index.html">Hotline Miami</a></div>
+    <div class="game"><a href="games/retrobowl/index.html">Retro Bowl</a></div>
+    <div class="game"><a href="games/pizzatower/index.html">Pizza Tower</a></div>
+  </div>
 
   <!-- Copyright Button -->
   <a href="https://guns.lol/bucknbill" target="_blank" rel="noopener noreferrer" class="credits-button" aria-label="Credits">
     ©
   </a>
+
+  <script>
+    const folder = document.getElementById('folder');
+    const gameList = document.getElementById('gameList');
+
+    function toggleFolder() {
+      const isOpen = folder.classList.toggle('open');
+      gameList.classList.toggle('open', isOpen);
+      folder.setAttribute('aria-expanded', isOpen);
+      gameList.setAttribute('aria-hidden', !isOpen);
+    }
+
+    folder.addEventListener('click', toggleFolder);
+    folder.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleFolder();
+      }
+    });
+  </script>
 </body>
 </html>
