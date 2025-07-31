@@ -22,7 +22,7 @@
     }
 
     .folder-toggle {
-      margin: 50px auto;
+      margin: 50px auto 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -49,7 +49,7 @@
 
     #game-folder {
       display: none;
-      margin-top: 20px;
+      margin-top: 10px;
       animation: fadeIn 0.3s ease-in-out;
     }
 
@@ -63,7 +63,9 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
     #game-folder li {
@@ -78,6 +80,11 @@
       padding: 6px 10px;
       border-radius: 6px;
       display: inline-block;
+      transition: background 0.2s;
+    }
+
+    #game-folder a:hover {
+      background: rgba(0, 255, 213, 0.2);
     }
 
     .credit-button {
