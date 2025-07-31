@@ -47,7 +47,7 @@
     }
 
     .folder-toggle:hover {
-      background: rgba(0, 255, 213, 0.3);
+      background: rgba(0, 255, 213, 0.3); /* translucent teal */
       color: #00ffd5;
     }
 
@@ -72,6 +72,7 @@
       border-radius: 10px;
       transition: all 0.2s;
       backdrop-filter: blur(4px);
+      font-family: 'Minecraftia', monospace, sans-serif;
     }
 
     .game a:hover {
@@ -106,7 +107,6 @@
       text-decoration: none;
       user-select: none;
       z-index: 1000;
-      font-family: sans-serif;
     }
 
     .credits-btn:hover {
@@ -127,10 +127,10 @@
       border-radius: 12px;
       backdrop-filter: blur(5px);
       z-index: 999;
+      font-family: 'Minecraftia', monospace, sans-serif;
     }
 
     .tab {
-      font-family: 'Minecraftia', monospace;
       color: #00ffd5;
       font-size: 1.2rem;
       text-decoration: none;
@@ -148,80 +148,79 @@
       background: rgba(0, 255, 213, 0.4);
     }
 
-    /* Password overlay styles */
-    #password-overlay {
+    /* Password protection overlay */
+    #password-container {
       position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(8px);
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 10000;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      z-index: 10000;
+      justify-content: center;
       color: #00ffd5;
       font-family: 'Minecraftia', monospace, sans-serif;
-      text-align: center;
-      padding: 20px;
+      user-select: none;
     }
 
-    #password-overlay h2 {
-      font-size: 2.5rem;
+    #password-container h2 {
+      font-size: 2rem;
       margin-bottom: 20px;
-      text-shadow: 2px 2px 5px black;
+      text-shadow: 0 0 10px #00ffd5;
     }
 
-    #password-overlay input[type="password"] {
-      padding: 12px 20px;
+    #password-input {
       font-size: 1.2rem;
-      border-radius: 8px;
-      border: 2px solid #00ffd5;
-      background: rgba(0,0,0,0.7);
-      color: #00ffd5;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
       outline: none;
-      margin-bottom: 15px;
-      width: 280px;
+      width: 300px;
       max-width: 90vw;
+      margin-bottom: 20px;
+      box-shadow: 0 0 15px #00ffd5;
+      background: rgba(0, 0, 0, 0.6);
+      color: #00ffd5;
       text-align: center;
-      font-family: 'Minecraftia', monospace, sans-serif;
     }
 
-    #password-overlay button {
+    #password-submit {
+      background: #00ffd5;
+      border: none;
       padding: 12px 30px;
       font-size: 1.2rem;
-      font-weight: bold;
-      background: #00ffd5;
-      color: #000;
-      border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: background 0.3s;
-      font-family: 'Minecraftia', monospace, sans-serif;
-      width: 150px;
-      max-width: 90vw;
+      color: black;
+      font-weight: bold;
+      transition: background 0.3s ease;
     }
 
-    #password-overlay button:hover {
-      background: #00bca8;
+    #password-submit:hover {
+      background: #00b8a3;
     }
 
     #password-error {
-      margin-top: 10px;
       color: #ff5555;
+      margin-top: 10px;
       font-weight: bold;
-      display: none;
-      text-shadow: 1px 1px 2px black;
+      text-shadow: 0 0 3px #ff5555;
+      min-height: 24px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Password Overlay -->
-  <div id="password-overlay">
-    <h2>Bucknbill Games</h2>
-    <input type="password" id="password-input" placeholder="Password..." autocomplete="off" />
-    <button onclick="checkPassword()">Enter</button>
-    <div id="password-error">Incorrect password, try again.</div>
+  <!-- Password Protection Overlay -->
+  <div id="password-container">
+    <h2>Enter Password to Access Bucknbill Games</h2>
+    <input id="password-input" type="password" placeholder="Password..." />
+    <button id="password-submit">Enter</button>
+    <div id="password-error"></div>
   </div>
 
   <!-- Top Navigation Tabs -->
@@ -230,10 +229,10 @@
     <a href="browser.html" class="tab">Browser</a>
   </nav>
 
-  <h1>Bucknbill</h1>
+  <h1>Bucknbill Games</h1>
 
   <!-- Folder Toggle Button with custom SVG folder icon -->
-  <button class="folder-toggle" onclick="toggleGames()">
+  <button class="folder-toggle" onclick="toggleGames()" aria-expanded="false" aria-controls="gameList">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none" stroke="#00ffd5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
       <path d="M2 7h5l2 3h13v8H2z"></path>
       <path d="M2 7V4a2 2 0 0 1 2-2h5l3 3h8a2 2 0 0 1 2 2v2"></path>
@@ -243,13 +242,22 @@
 
   <!-- Game List -->
   <div id="gameList" class="game-list" aria-hidden="true">
-    <div class="game"><a href="games/undertale/index.html">Undertale</a></div>
-    <div class="game"><a href="games/undertaleyellow/index.html">Undertale Yellow</a></div>
-    <div class="game"><a href="games/deltarune/index.html">Deltarune</a></div>
-    <div class="game"><a href="games/retrobowl/index.html">Retro Bowl</a></div>
+    <div class="game"><a href="games/sliceitall/index.html">Slice it All</a></div>
+    <div class="game"><a href="games/slowroads/index.html">Slowroads</a></div>
+    <div class="game"><a href="games/driftboss/index.html">Drift Boss</a></div>
+    <div class="game"><a href="games/crossyroad/index.html">Crossy Road</a></div>
+    <div class="game"><a href="games/ragdollhit/index.html">Ragdoll Hit</a></div>
+    <div class="game"><a href="games/ragdollarchers/index.html">Ragdoll Archers</a></div>
+    <div class="game"><a href="games/fridaynightfunkin/index.html">Friday Night Funkin</a></div>
+    <div class="game"><a href="games/blockblast/index.html">Block Blast</a></div>
+    <div class="game"><a href="games/baldisbasics/index.html">Baldi's Basics</a></div>
+    <div class="game"><a href="games/territorialio/index.html">Territorial.io</a></div>
+    <div class="game"><a href="games/paperio2/index.html">Paper.io 2</a></div>
     <div class="game"><a href="games/cookieclicker/index.html">Cookie Clicker</a></div>
     <div class="game"><a href="games/minesweeper/index.html">Minesweeper</a></div>
-    <div class="game"><a href="games/paperio/index.html">Paper IO</a></div>
+    <div class="game"><a href="games/retrobowl/index.html">Retro Bowl</a></div>
+    <div class="game"><a href="games/deltarune/index.html">Deltarune</a></div>
+    <div class="game"><a href="games/undertale/index.html">Undertale</a></div>
   </div>
 
   <!-- Credits Button -->
@@ -258,28 +266,38 @@
   <script>
     const correctPassword = "welcometotheunderground";
 
-    function checkPassword() {
-      const input = document.getElementById('password-input').value;
-      const errorMsg = document.getElementById('password-error');
-      if(input === correctPassword) {
-        document.getElementById('password-overlay').style.display = 'none';
-      } else {
-        errorMsg.style.display = 'block';
-      }
-    }
+    const passwordContainer = document.getElementById('password-container');
+    const passwordInput = document.getElementById('password-input');
+    const passwordSubmit = document.getElementById('password-submit');
+    const passwordError = document.getElementById('password-error');
 
     function toggleGames() {
       const list = document.getElementById("gameList");
+      const folderBtn = document.querySelector(".folder-toggle");
       list.classList.toggle("show");
+      const expanded = folderBtn.getAttribute("aria-expanded") === "true";
+      folderBtn.setAttribute("aria-expanded", !expanded);
+      list.setAttribute("aria-hidden", expanded);
     }
 
-    // Optional: Press Enter key to submit password
-    document.getElementById('password-input').addEventListener('keydown', function(e) {
-      if(e.key === 'Enter') {
+    function checkPassword() {
+      if (passwordInput.value === correctPassword) {
+        passwordContainer.style.display = 'none';
+      } else {
+        passwordError.textContent = 'Incorrect password, try again.';
+        passwordInput.value = '';
+      }
+    }
+
+    passwordSubmit.addEventListener('click', checkPassword);
+    passwordInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
         checkPassword();
       }
     });
-  </script>
 
+    // Focus input on page load
+    passwordInput.focus();
+  </script>
 </body>
 </html>
