@@ -106,7 +106,7 @@
       text-decoration: none;
       user-select: none;
       z-index: 1000;
-      font-family: sans-serif; /* <-- override Minecraftia here */
+      font-family: sans-serif;
     }
 
     .credits-btn:hover {
@@ -147,9 +147,82 @@
     .tab.active {
       background: rgba(0, 255, 213, 0.4);
     }
+
+    /* Password overlay styles */
+    #password-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      color: #00ffd5;
+      font-family: 'Minecraftia', monospace, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #password-overlay h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px black;
+    }
+
+    #password-overlay input[type="password"] {
+      padding: 12px 20px;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      border: 2px solid #00ffd5;
+      background: rgba(0,0,0,0.7);
+      color: #00ffd5;
+      outline: none;
+      margin-bottom: 15px;
+      width: 280px;
+      max-width: 90vw;
+      text-align: center;
+      font-family: 'Minecraftia', monospace, sans-serif;
+    }
+
+    #password-overlay button {
+      padding: 12px 30px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background: #00ffd5;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-family: 'Minecraftia', monospace, sans-serif;
+      width: 150px;
+      max-width: 90vw;
+    }
+
+    #password-overlay button:hover {
+      background: #00bca8;
+    }
+
+    #password-error {
+      margin-top: 10px;
+      color: #ff5555;
+      font-weight: bold;
+      display: none;
+      text-shadow: 1px 1px 2px black;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Password Overlay -->
+  <div id="password-overlay">
+    <h2>Enter Password</h2>
+    <input type="password" id="password-input" placeholder="Password..." autocomplete="off" />
+    <button onclick="checkPassword()">Enter</button>
+    <div id="password-error">Incorrect password, try again.</div>
+  </div>
 
   <!-- Top Navigation Tabs -->
   <nav class="top-nav">
@@ -183,10 +256,29 @@
   <a href="https://guns.lol/bucknbill" class="credits-btn" title="Credits" target="_blank" rel="noopener noreferrer">©</a>
 
   <script>
+    const correctPassword = "welcometotheunderground";
+
+    function checkPassword() {
+      const input = document.getElementById('password-input').value;
+      const errorMsg = document.getElementById('password-error');
+      if(input === correctPassword) {
+        document.getElementById('password-overlay').style.display = 'none';
+      } else {
+        errorMsg.style.display = 'block';
+      }
+    }
+
     function toggleGames() {
       const list = document.getElementById("gameList");
       list.classList.toggle("show");
     }
+
+    // Optional: Press Enter key to submit password
+    document.getElementById('password-input').addEventListener('keydown', function(e) {
+      if(e.key === 'Enter') {
+        checkPassword();
+      }
+    });
   </script>
 
 </body>
