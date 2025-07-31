@@ -47,15 +47,16 @@
     }
 
     .folder-toggle:hover {
-      background: rgba(0, 255, 213, 0.3); /* translucent teal */
+      background: rgba(0, 255, 213, 0.3);
       color: #00ffd5;
     }
 
     .game-list {
-      margin-top: 30px;
+      margin-top: 20px;
       display: none;
-      flex-direction: column;
-      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 12px;
       animation: fadeIn 0.4s ease-in-out forwards;
     }
 
@@ -63,22 +64,45 @@
       display: flex;
     }
 
+    .game {
+      flex: 0 1 calc(20% - 12px);
+      box-sizing: border-box;
+    }
+
     .game a {
+      display: block;
       text-decoration: none;
       color: #ffffff;
       background: rgba(45, 45, 45, 0.85);
       border: 2px solid #00ffd5;
-      padding: 10px 20px;
-      border-radius: 10px;
+      padding: 6px 10px;
+      border-radius: 8px;
       transition: all 0.2s;
       backdrop-filter: blur(4px);
       font-family: 'Minecraftia', monospace, sans-serif;
+      font-size: 0.9rem;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .game a:hover {
       background: #00ffd5;
       color: #000;
-      transform: scale(1.05);
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 900px) {
+      .game {
+        flex: 0 1 calc(33.333% - 12px);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .game {
+        flex: 0 1 calc(50% - 12px);
+      }
     }
 
     @keyframes fadeIn {
@@ -127,10 +151,10 @@
       border-radius: 12px;
       backdrop-filter: blur(5px);
       z-index: 999;
-      font-family: 'Minecraftia', monospace, sans-serif;
     }
 
     .tab {
+      font-family: 'Minecraftia', monospace;
       color: #00ffd5;
       font-size: 1.2rem;
       text-decoration: none;
@@ -148,23 +172,23 @@
       background: rgba(0, 255, 213, 0.4);
     }
 
-    /* Password protection overlay */
+    /* Password container */
     #password-container {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
       background: rgba(0, 0, 0, 0.85);
       z-index: 10000;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: 20px;
       color: #00ffd5;
       font-family: 'Minecraftia', monospace, sans-serif;
-      user-select: none;
     }
 
     #password-container h2 {
@@ -173,66 +197,63 @@
       text-shadow: 0 0 10px #00ffd5;
     }
 
-    #password-input {
+    #password-container input {
       font-size: 1.2rem;
       padding: 12px 20px;
       border-radius: 10px;
-      border: none;
+      border: 2px solid #00ffd5;
       outline: none;
-      width: 300px;
+      width: 280px;
       max-width: 90vw;
-      margin-bottom: 20px;
-      box-shadow: 0 0 15px #00ffd5;
+      margin-bottom: 15px;
       background: rgba(0, 0, 0, 0.6);
       color: #00ffd5;
       text-align: center;
     }
 
-    #password-submit {
-      background: #00ffd5;
-      border: none;
-      padding: 12px 30px;
+    #password-container input::placeholder {
+      color: #00ffd580;
+    }
+
+    #password-container button {
       font-size: 1.2rem;
+      padding: 12px 30px;
       border-radius: 10px;
+      border: none;
+      background: #00ffd5;
+      color: #000;
+      font-weight: bold;
       cursor: pointer;
-      color: black;
-      font-weight: bold;
+      box-shadow: 0 0 15px #00ffd5;
       transition: background 0.3s ease;
+      width: 280px;
+      max-width: 90vw;
     }
 
-    #password-submit:hover {
-      background: #00b8a3;
-    }
-
-    #password-error {
-      color: #ff5555;
-      margin-top: 10px;
-      font-weight: bold;
-      text-shadow: 0 0 3px #ff5555;
-      min-height: 24px;
+    #password-container button:hover {
+      background: #00c2a7;
     }
   </style>
 </head>
 <body>
 
-  <!-- Password Protection Overlay -->
+  <!-- Password Protection -->
   <div id="password-container">
     <h2>Enter Password to Access Bucknbill Games</h2>
-    <input id="password-input" type="password" placeholder="Password..." />
-    <button id="password-submit">Enter</button>
-    <div id="password-error"></div>
+    <input type="password" id="password" placeholder="Password" autofocus />
+    <button onclick="checkPassword()">Enter</button>
   </div>
 
-  <!-- Top Navigation Tabs -->
-  <nav class="top-nav">
-    <a href="index.html" class="tab active">Main Page</a>
+  <!-- Navigation Tabs -->
+  <nav class="top-nav" aria-label="Main Navigation">
+    <a href="index.html" class="tab active" aria-current="page">Main Page</a>
     <a href="browser.html" class="tab">Browser</a>
   </nav>
 
   <h1>Bucknbill Games</h1>
 
-  <!-- Folder Toggle Button with custom SVG folder icon -->
-  <button class="folder-toggle" onclick="toggleGames()" aria-expanded="false" aria-controls="gameList">
+  <!-- Folder Toggle Button -->
+  <button class="folder-toggle" onclick="toggleGames()" aria-expanded="false" aria-controls="gameList" aria-haspopup="true">
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none" stroke="#00ffd5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
       <path d="M2 7h5l2 3h13v8H2z"></path>
       <path d="M2 7V4a2 2 0 0 1 2-2h5l3 3h8a2 2 0 0 1 2 2v2"></path>
@@ -241,7 +262,7 @@
   </button>
 
   <!-- Game List -->
-  <div id="gameList" class="game-list" aria-hidden="true">
+  <div id="gameList" class="game-list" aria-hidden="true" role="region" aria-label="Games list">
     <div class="game"><a href="games/sliceitall/index.html">Slice it All</a></div>
     <div class="game"><a href="games/slowroads/index.html">Slowroads</a></div>
     <div class="game"><a href="games/driftboss/index.html">Drift Boss</a></div>
@@ -266,38 +287,30 @@
   <script>
     const correctPassword = "welcometotheunderground";
 
-    const passwordContainer = document.getElementById('password-container');
-    const passwordInput = document.getElementById('password-input');
-    const passwordSubmit = document.getElementById('password-submit');
-    const passwordError = document.getElementById('password-error');
+    function checkPassword() {
+      const input = document.getElementById("password").value;
+      if (input === correctPassword) {
+        document.getElementById("password-container").style.display = "none";
+        document.getElementById("gameList").style.display = "flex";
+        // Update folder toggle aria-expanded
+        document.querySelector('.folder-toggle').setAttribute('aria-expanded', 'true');
+      } else {
+        alert("Incorrect password. Try again!");
+      }
+    }
 
     function toggleGames() {
       const list = document.getElementById("gameList");
-      const folderBtn = document.querySelector(".folder-toggle");
-      list.classList.toggle("show");
-      const expanded = folderBtn.getAttribute("aria-expanded") === "true";
-      folderBtn.setAttribute("aria-expanded", !expanded);
-      list.setAttribute("aria-hidden", expanded);
-    }
-
-    function checkPassword() {
-      if (passwordInput.value === correctPassword) {
-        passwordContainer.style.display = 'none';
+      const toggleBtn = document.querySelector('.folder-toggle');
+      if (list.classList.contains("show")) {
+        list.classList.remove("show");
+        toggleBtn.setAttribute('aria-expanded', 'false');
       } else {
-        passwordError.textContent = 'Incorrect password, try again.';
-        passwordInput.value = '';
+        list.classList.add("show");
+        toggleBtn.setAttribute('aria-expanded', 'true');
       }
     }
-
-    passwordSubmit.addEventListener('click', checkPassword);
-    passwordInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        checkPassword();
-      }
-    });
-
-    // Focus input on page load
-    passwordInput.focus();
   </script>
+
 </body>
 </html>
