@@ -13,110 +13,115 @@
     }
 
     body {
-      margin: 0;
-      padding: 0;
       font-family: 'Minecraftia', monospace, sans-serif;
-      background: url('https://images.stockcake.com/public/c/9/a/c9a42323-4ef9-42f1-9102-3ff270af18cd_large/pixel-space-dreams-stockcake.jpg') no-repeat center center fixed;
-      background-size: cover;
+      margin: 0;
+      padding: 60px 20px;
       color: white;
       text-align: center;
+      background: url('https://images.stockcake.com/public/c/9/a/c9a42323-4ef9-42f1-9102-3ff270af18cd_large/pixel-space-dreams-stockcake.jpg') no-repeat center center fixed;
+      background-size: cover;
+      overflow-x: hidden;
     }
 
-    header {
-      padding: 15px;
-      background-color: rgba(0, 0, 0, 0.6);
-      font-size: 2rem;
+    h1 {
+      font-size: 2.5rem;
       color: #00ffd5;
-      text-shadow: 0 0 8px #00ffd5;
-      user-select: none;
+      text-shadow: 2px 2px 6px #000;
+      margin-bottom: 40px;
     }
 
     .folder-toggle {
-      margin: 30px auto 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: rgba(34, 34, 34, 0.7);
+      font-family: 'Minecraftia', monospace, sans-serif;
+      background: #222;
       border: 2px solid #00ffd5;
-      padding: 12px 24px;
-      font-size: 1.3rem;
+      padding: 10px 30px;
       color: #00ffd5;
+      font-size: 1.1rem;
       border-radius: 12px;
       cursor: pointer;
       transition: background 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      vertical-align: middle;
       user-select: none;
-      max-width: 200px;
     }
 
     .folder-toggle:hover {
       background: rgba(0, 255, 213, 0.3);
+      color: #00ffd5;
     }
 
-    #game-folder {
+    .folder-toggle svg {
+      flex-shrink: 0;
+      vertical-align: middle;
+    }
+
+    .game-list {
+      margin-top: 20px;
       display: none;
-      margin-top: 10px;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    #game-folder.open {
-      display: block;
-    }
-
-    #game-folder ul {
-      list-style: none;
-      padding: 0;
-      display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px 20px;
-      margin: 0 auto;
+      gap: 12px 15px;
+      animation: fadeIn 0.4s ease-in-out forwards;
+    }
+    .game-list.show {
+      display: flex;
     }
 
-    #game-folder li {
-      margin: 5px;
-    }
-
-    #game-folder a {
-      color: #00ffd5;
+    .game a {
       text-decoration: none;
-      font-size: 1.1rem;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 8px 14px;
-      border-radius: 8px;
+      color: #ffffff;
+      background: rgba(45, 45, 45, 0.85);
+      border: 2px solid #00ffd5;
+      padding: 10px 20px;
+      border-radius: 10px;
+      transition: all 0.2s;
+      backdrop-filter: blur(4px);
+      font-size: 1rem;
+      min-width: 140px;
       display: inline-block;
+      text-align: center;
       white-space: nowrap;
-      user-select: none;
-      transition: background 0.3s ease;
     }
 
-    #game-folder a:hover {
-      background: rgba(0, 255, 213, 0.2);
+    .game a:hover {
+      background: #00ffd5;
+      color: #000;
+      transform: scale(1.05);
     }
 
-    .credit-button {
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .credits-btn {
       position: fixed;
       bottom: 15px;
       right: 15px;
-      width: 50px;
-      height: 50px;
+      background: rgba(0, 255, 213, 0.3);
+      color: black;
+      font-size: 1.8rem;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-      font-size: 1.6rem;
+      width: 65px;
+      height: 65px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid white;
+      font-weight: bold;
       cursor: pointer;
-      transition: background 0.3s;
+      box-shadow: 0 0 12px rgba(0, 255, 213, 0.5);
+      transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
       user-select: none;
+      z-index: 1000;
     }
 
-    .credit-button:hover {
-      background: rgba(255, 255, 255, 0.5);
+    .credits-btn:hover {
+      background: rgba(0, 255, 213, 1);
+      box-shadow: 0 0 20px rgba(0, 255, 213, 1);
+      transform: scale(1.1);
     }
 
     #password-container {
@@ -126,7 +131,7 @@
       width: 100vw;
       height: 100vh;
       backdrop-filter: blur(8px);
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.85);
       z-index: 9999;
       display: flex;
       align-items: center;
@@ -176,52 +181,54 @@
 </head>
 <body>
 
+  <!-- Password input overlay -->
   <div id="password-container" aria-label="Password protected access">
     <input type="password" id="password" placeholder="Enter password..." aria-label="Password input" autofocus />
     <button onclick="checkPassword()">Enter</button>
   </div>
 
-  <header>Bucknbill Games</header>
+  <h1>Bucknbill Games</h1>
 
-  <button class="folder-toggle" aria-expanded="false" aria-controls="game-folder" aria-label="Toggle games list" onclick="toggleGames()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="24" viewBox="0 0 24 20" fill="none" stroke="#00ffd5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 8px;">
+  <!-- Folder Toggle Button with custom SVG folder icon -->
+  <button class="folder-toggle" onclick="toggleGames()" aria-expanded="false" aria-controls="gameList" aria-label="Toggle games list">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none" stroke="#00ffd5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" >
       <path d="M2 7h5l2 3h13v8H2z"></path>
       <path d="M2 7V4a2 2 0 0 1 2-2h5l3 3h8a2 2 0 0 1 2 2v2"></path>
     </svg>
     Games
   </button>
 
-  <div id="game-folder" aria-hidden="true">
-    <ul>
-      <li><a href="#">Plants vs Zombies</a></li>
-      <li><a href="#">Draw Joust</a></li>
-      <li><a href="#">Chat Bot (A...I)</a></li>
-      <li><a href="#">Superhot</a></li>
-      <li><a href="#">Idle Breakout</a></li>
-      <li><a href="#">Geometry Dash Lite</a></li>
-      <li><a href="#">Fork n Sausage</a></li>
-      <li><a href="#">Sandboxels</a></li>
-      <li><a href="#">Sandtris</a></li>
-      <li><a href="#">Slice it All</a></li>
-      <li><a href="#">Slowroads</a></li>
-      <li><a href="#">Drift Boss</a></li>
-      <li><a href="#">Crossy Road</a></li>
-      <li><a href="#">Ragdoll Hit</a></li>
-      <li><a href="#">Ragdoll Archers</a></li>
-      <li><a href="#">Friday Night Funkin</a></li>
-      <li><a href="#">Block Blast</a></li>
-      <li><a href="#">Baldi's Basics</a></li>
-      <li><a href="#">Territorial.io</a></li>
-      <li><a href="#">Paper.io 2</a></li>
-      <li><a href="#">Cookie Clicker</a></li>
-      <li><a href="#">Minesweeper Mania</a></li>
-      <li><a href="#">Retro Bowl</a></li>
-      <li><a href="#">Deltarune</a></li>
-      <li><a href="#">Undertale</a></li>
-    </ul>
+  <!-- Game List -->
+  <div id="gameList" class="game-list" aria-hidden="true">
+    <div class="game"><a href="Games/Baldi's Basics.html">Baldi's Basics</a></div>
+    <div class="game"><a href="Games/Block Blast.html">Block Blast</a></div>
+    <div class="game"><a href="Games/Chat Bot (A._.I).html">Chat Bot (A._.I)</a></div>
+    <div class="game"><a href="Games/Cookie Clicker.html">Cookie Clicker</a></div>
+    <div class="game"><a href="Games/Crossy Road.html">Crossy Road</a></div>
+    <div class="game"><a href="Games/Deltarune.html">Deltarune</a></div>
+    <div class="game"><a href="Games/Draw Joust.html">Draw Joust</a></div>
+    <div class="game"><a href="Games/Drift Boss.html">Drift Boss</a></div>
+    <div class="game"><a href="Games/Fork n Sausage.html">Fork n Sausage</a></div>
+    <div class="game"><a href="Games/Friday Night Funkin.html">Friday Night Funkin</a></div>
+    <div class="game"><a href="Games/Geometry Dash Lite.html">Geometry Dash Lite</a></div>
+    <div class="game"><a href="Games/Idle Breakout.html">Idle Breakout</a></div>
+    <div class="game"><a href="Games/Minesweeper Mania.html">Minesweeper Mania</a></div>
+    <div class="game"><a href="Games/Paper.io 2.html">Paper.io 2</a></div>
+    <div class="game"><a href="Games/Plants vs Zombies.html">Plants vs Zombies</a></div>
+    <div class="game"><a href="Games/Ragdoll Archers.html">Ragdoll Archers</a></div>
+    <div class="game"><a href="Games/Ragdoll Hit.html">Ragdoll Hit</a></div>
+    <div class="game"><a href="Games/Retro Bowl.html">Retro Bowl</a></div>
+    <div class="game"><a href="Games/Sandboxels.html">Sandboxels</a></div>
+    <div class="game"><a href="Games/Sandtris.html">Sandtris</a></div>
+    <div class="game"><a href="Games/Slice it All.html">Slice it All</a></div>
+    <div class="game"><a href="Games/Slowroads.html">Slowroads</a></div>
+    <div class="game"><a href="Games/Superhot.html">Superhot</a></div>
+    <div class="game"><a href="Games/Territorial.io.html">Territorial.io</a></div>
+    <div class="game"><a href="Games/Undertale.html">Undertale</a></div>
   </div>
 
-  <div class="credit-button" title="Credits">&copy;</div>
+  <!-- Credits Button -->
+  <a href="https://guns.lol/bucknbill" class="credits-btn" title="Credits" target="_blank" rel="noopener noreferrer">©</a>
 
   <script>
     const correctPassword = "welcometotheunderground";
@@ -230,10 +237,11 @@
       const input = document.getElementById("password").value;
       if (input === correctPassword) {
         document.getElementById("password-container").style.display = "none";
-        const gameFolder = document.getElementById("game-folder");
-        gameFolder.classList.add("open");
-        gameFolder.setAttribute("aria-hidden", "false");
-        document.querySelector('.folder-toggle').setAttribute('aria-expanded', 'true');
+        const gameList = document.getElementById("gameList");
+        gameList.classList.add("show");
+        gameList.setAttribute("aria-hidden", "false");
+        const toggleBtn = document.querySelector('.folder-toggle');
+        toggleBtn.setAttribute('aria-expanded', 'true');
       } else {
         alert("Incorrect password. Try again!");
         document.getElementById("password").value = "";
@@ -241,18 +249,19 @@
     }
 
     function toggleGames() {
-      const gameFolder = document.getElementById("game-folder");
+      const list = document.getElementById("gameList");
       const toggleBtn = document.querySelector('.folder-toggle');
-      if (gameFolder.classList.contains("open")) {
-        gameFolder.classList.remove("open");
-        gameFolder.setAttribute("aria-hidden", "true");
+      if (list.classList.contains("show")) {
+        list.classList.remove("show");
+        list.setAttribute("aria-hidden", "true");
         toggleBtn.setAttribute('aria-expanded', 'false');
       } else {
-        gameFolder.classList.add("open");
-        gameFolder.setAttribute("aria-hidden", "false");
+        list.classList.add("show");
+        list.setAttribute("aria-hidden", "false");
         toggleBtn.setAttribute('aria-expanded', 'true');
       }
     }
   </script>
+
 </body>
 </html>
