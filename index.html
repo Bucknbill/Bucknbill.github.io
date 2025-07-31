@@ -85,6 +85,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Credits button */
     .credits-btn {
       position: fixed;
       bottom: 15px;
@@ -105,6 +106,7 @@
       text-decoration: none;
       user-select: none;
       z-index: 1000;
+      font-family: sans-serif; /* <-- override Minecraftia here */
     }
 
     .credits-btn:hover {
@@ -145,70 +147,11 @@
     .tab.active {
       background: rgba(0, 255, 213, 0.4);
     }
-
-    /* Password Overlay */
-    #passwordOverlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      flex-direction: column;
-    }
-
-    #passwordOverlay h2 {
-      font-size: 2rem;
-      color: #00ffd5;
-      margin-bottom: 20px;
-    }
-
-    #passwordInput {
-      font-family: 'Minecraftia';
-      font-size: 1rem;
-      padding: 10px;
-      border: 2px solid #00ffd5;
-      border-radius: 10px;
-      background: #111;
-      color: #00ffd5;
-      outline: none;
-      text-align: center;
-    }
-
-    #submitPassword {
-      margin-top: 15px;
-      padding: 8px 20px;
-      border: none;
-      font-family: 'Minecraftia';
-      background: #00ffd5;
-      color: black;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    #submitPassword:hover {
-      background: white;
-    }
-
-    #errorMessage {
-      color: red;
-      margin-top: 10px;
-    }
   </style>
 </head>
 <body>
 
-  <!-- PASSWORD SCREEN -->
-  <div id="passwordOverlay">
-    <h2>Enter Password</h2>
-    <input type="password" id="passwordInput" placeholder="Password..." />
-    <button id="submitPassword">Enter</button>
-    <div id="errorMessage"></div>
-  </div>
-
-  <!-- NAV -->
+  <!-- Top Navigation Tabs -->
   <nav class="top-nav">
     <a href="index.html" class="tab active">Main Page</a>
     <a href="browser.html" class="tab">Browser</a>
@@ -216,9 +159,9 @@
 
   <h1>Bucknbill</h1>
 
-  <!-- Folder Button -->
+  <!-- Folder Toggle Button with custom SVG folder icon -->
   <button class="folder-toggle" onclick="toggleGames()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none" stroke="#00ffd5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 24 20" fill="none" stroke="#00ffd5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
       <path d="M2 7h5l2 3h13v8H2z"></path>
       <path d="M2 7V4a2 2 0 0 1 2-2h5l3 3h8a2 2 0 0 1 2 2v2"></path>
     </svg>
@@ -236,27 +179,15 @@
     <div class="game"><a href="games/paperio/index.html">Paper IO</a></div>
   </div>
 
-  <!-- Credits -->
+  <!-- Credits Button -->
   <a href="https://guns.lol/bucknbill" class="credits-btn" title="Credits" target="_blank" rel="noopener noreferrer">©</a>
 
   <script>
-    const correctPassword = "welcometotheunderground";
-    const overlay = document.getElementById("passwordOverlay");
-    const submitBtn = document.getElementById("submitPassword");
-
-    submitBtn.addEventListener("click", () => {
-      const entered = document.getElementById("passwordInput").value;
-      if (entered === correctPassword) {
-        overlay.style.display = "none";
-      } else {
-        document.getElementById("errorMessage").textContent = "Incorrect password.";
-      }
-    });
-
     function toggleGames() {
       const list = document.getElementById("gameList");
       list.classList.toggle("show");
     }
   </script>
+
 </body>
 </html>
